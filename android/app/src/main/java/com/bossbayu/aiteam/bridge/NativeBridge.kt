@@ -29,6 +29,8 @@ class NativeBridge(
     private val context: Context,
     private val activity: MainActivity
 ) {
+    private val kadbManager = com.bossbayu.aiteam.kadb.KadbManager(context)
+
     companion object {
         const val NOTIFICATION_CHANNEL_MESSAGES = "wa_ai_messages_channel"
         const val KEY_TEXT_REPLY = "key_text_reply"
@@ -187,6 +189,14 @@ class NativeBridge(
                 put("error", e.message)
             }.toString()
         }
+    }
+
+    /**
+     * 6. Status & Kendali Droide Wireless ADB (KADB)
+     */
+    @JavascriptInterface
+    fun getKadbStatus(): String {
+        return kadbManager.getStatusJson()
     }
 
     private fun createNotificationChannel() {

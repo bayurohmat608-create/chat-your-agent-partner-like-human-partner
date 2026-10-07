@@ -2857,6 +2857,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Droide Workstation Switchers & Terminal Launcher
+  document.getElementById("btnSwitchAlpine")?.addEventListener("click", () => switchWorkstation("alpine"));
+  document.getElementById("btnSwitchUbuntu")?.addEventListener("click", () => switchWorkstation("ubuntu"));
+  document.getElementById("btnOpenTerminalOverlay")?.addEventListener("click", () => {
+    if (window.AndroidBridge && window.AndroidBridge.toggleTerminal) {
+      window.AndroidBridge.toggleTerminal("alpine");
+    } else {
+      showToast("💻 Terminal Overlay aktif dalam mode Native Android.");
+    }
+  });
+  document.getElementById("btnCheckKadb")?.addEventListener("click", () => {
+    if (window.AndroidBridge && window.AndroidBridge.getKadbStatus) {
+      try {
+        const status = JSON.parse(window.AndroidBridge.getKadbStatus());
+        const text = status.connected 
+          ? `🔌 KADB Terhubung di port ${status.port}!` 
+          : `⚠️ KADB belum terhubung (Port: ${status.port}). Aktifkan Wireless Debugging di Pengaturan Pengembang Android.`;
+        showToast(text);
+        const kadbEl = document.getElementById("kadbStatusText");
+        if (kadbEl) kadbEl.textContent = status.connected ? `Terhubung (Port ${status.port})` : "Wireless Debugging Belum Aktif";
+      } catch (e) {
+        showToast("Droide KADB aktif.");
+      }
+    } else {
+      showToast("Droide KADB tersedia pada aplikasi Android native (Android 11+).");
+    }
+  });
+
   // Context Menu Item Actions
   document.getElementById("ctxReply")?.addEventListener("click", () => {
     if (activeContextMsg) {
@@ -3053,6 +3081,55 @@ function populateSettingsModal() {
 
   // Load and render Auth Vault in Settings
   loadAuthVault();
+
+  // Load and render Droide Workstation & KADB status
+  loadWorkstationStatus();
+}
+
+async function loadWorkstationStatus() {
+  try {
+    const res = await fetch("/api/workstation/status");
+    if (!res.ok) return;
+    const data = await res.json();
+    const badge = document.getElementById("workstationStatusBadge");
+    if (badge) {
+      badge.textContent = `${(data.active || "alpine").toUpperCase()} Aktif`;
+      badge.style.background = data.active === "ubuntu" ? "#ea580c" : "#00a884";
+    }
+    const btnAlpine = document.getElementById("btnSwitchAlpine");
+    const btnUbuntu = document.getElementById("btnSwitchUbuntu");
+    if (btnAlpine && btnUbuntu) {
+      btnAlpine.style.border = data.active === "alpine" ? "2px solid #00a884" : "1px solid rgba(255,255,255,0.1)";
+      btnUbuntu.style.border = data.active === "ubuntu" ? "2px solid #ea580c" : "1px solid rgba(255,255,255,0.1)";
+    }
+    if (window.AndroidBridge && window.AndroidBridge.getKadbStatus) {
+      try {
+        const kadb = JSON.parse(window.AndroidBridge.getKadbStatus());
+        const kadbEl = document.getElementById("kadbStatusText");
+        if (kadbEl) kadbEl.textContent = kadb.connected ? `Terhubung (Port ${kadb.port})` : `Siap di Port ${kadb.port}`;
+      } catch (_) {}
+    }
+  } catch (_) {}
+}
+
+async function switchWorkstation(target) {
+  try {
+    showToast(`Beralih ke workstation ${target.toUpperCase()}...`);
+    const res = await fetch("/api/workstation/switch", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ target })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`🚀 Berhasil beralih ke workstation ${data.active.toUpperCase()}`);
+      loadWorkstationStatus();
+    } else {
+      showToast(data.error || "Gagal beralih workstation");
+    }
+  } catch (err) {
+    showToast("Error beralih workstation: " + err.message);
+  }
 }
 
 function renderProviderChip(sel, chip) {

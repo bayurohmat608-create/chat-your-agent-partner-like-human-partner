@@ -17,6 +17,7 @@ import java.io.OutputStreamWriter
 class TerminalSession(
     private val workstationManager: WorkstationManager,
     private val prootManager: PRootManager,
+    private val feedbackManager: TerminalFeedbackManager? = null,
     private val onOutput: (String) -> Unit
 ) {
 
@@ -60,6 +61,7 @@ class TerminalSession(
     }
 
     fun sendCommand(cmd: String) {
+        feedbackManager?.onCommandStarted(cmd)
         sessionScope.launch {
             try {
                 writer?.apply {
@@ -78,6 +80,7 @@ class TerminalSession(
         var read: Int
         while (stream.read(buffer).also { read = it } != -1) {
             val text = String(buffer, 0, read)
+            feedbackManager?.onOutputReceived(text)
             onOutput(text)
         }
     }

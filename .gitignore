@@ -35,3 +35,13 @@ auth_vault/
 
 # Temporary files
 test_cat.png
+.wget-hsts
+
+# Android build outputs
+.gradle/
+build/
+app/build/
+android/.gradle/
+android/app/build/
+*.apk
+*.aab

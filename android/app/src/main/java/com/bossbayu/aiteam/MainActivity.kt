@@ -21,6 +21,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bossbayu.aiteam.runtime.BootstrapInstaller
 import com.bossbayu.aiteam.runtime.PRootManager
 import com.bossbayu.aiteam.runtime.WorkstationManager
 import com.bossbayu.aiteam.service.EngineForegroundService
@@ -71,12 +72,37 @@ class MainActivity : AppCompatActivity() {
         prootManager = PRootManager(this)
 
         requestRequiredPermissions()
-        startEngineService()
         setupWebView()
         setupTerminalFab()
         setupBackHandler()
 
-        waitForServerAndLoad()
+        val bootstrapInstaller = BootstrapInstaller(this)
+        if (!bootstrapInstaller.isInstalled()) {
+            tvLoadingStatus.text = "Mempersiapkan sistem untuk pertama kali..."
+            bootstrapInstaller.installAsync(object : BootstrapInstaller.InstallCallback {
+                override fun onProgress(percent: Int, message: String) {
+                    runOnUiThread {
+                        tvLoadingStatus.text = "$percent% - $message"
+                    }
+                }
+
+                override fun onComplete() {
+                    runOnUiThread {
+                        startEngineService()
+                        waitForServerAndLoad()
+                    }
+                }
+
+                override fun onError(error: String) {
+                    runOnUiThread {
+                        tvLoadingStatus.text = "Gagal ekstraksi aset: $error"
+                    }
+                }
+            })
+        } else {
+            startEngineService()
+            waitForServerAndLoad()
+        }
     }
 
     private fun requestRequiredPermissions() {

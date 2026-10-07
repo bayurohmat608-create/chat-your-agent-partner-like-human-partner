@@ -89,7 +89,8 @@ class TerminalOverlayDialog(
     }
 
     private fun startTerminal() {
-        terminalSession = TerminalSession(workstationManager, prootManager) { text ->
+        val feedbackManager = TerminalFeedbackManager(context)
+        terminalSession = TerminalSession(workstationManager, prootManager, feedbackManager) { text ->
             tvOutput.post {
                 tvOutput.append(text)
                 scrollTerminal.fullScroll(ScrollView.FOCUS_DOWN)

@@ -2617,6 +2617,40 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Terminal Feedback Loop Endpoint (Adopted from Droide Architecture)
+  if (url.pathname === "/api/agent/feedback" && req.method === "POST") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        const feedback = JSON.parse(body || "{}");
+        const command = feedback.command || "Perintah tidak dikenal";
+        const exitCode = feedback.exitCode || 1;
+        const errorDetails = feedback.errorDetails || "Error tidak diketahui";
+
+        const feedbackMessage = {
+          id: `sys-feedback-${Date.now()}`,
+          chatId: state.activeChat || "group",
+          type: "system",
+          text: `⚠️ **Terminal Feedback Loop (Droide Engine)**:\nPerintah: \`${command}\` gagal (Exit: ${exitCode})\nDetail:\n\`\`\`\n${errorDetails.slice(0, 300)}\n\`\`\``,
+          time: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
+        };
+
+        if (!state.chats[feedbackMessage.chatId]) state.chats[feedbackMessage.chatId] = [];
+        state.chats[feedbackMessage.chatId].push(feedbackMessage);
+        saveChatData();
+        broadcastSSE("message", feedbackMessage);
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, delivered: true }));
+      } catch (err) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
+    return;
+  }
+
   // Internal endpoint for CLI tools (chat-send) to add files directly to chat
   if (url.pathname === "/api/internal/chat-file" && req.method === "POST") {
     let body = "";

@@ -1208,6 +1208,51 @@
           </div>
         </div>
 
+        <!-- Section 5: Droide Workstation & Terminal IDE Superpowers -->
+        <div class="settings-section-header" style="margin-top: 14px;">
+          <span class="settings-section-title">⚡ WORKSTATION & TERMINAL IDE (DROIDE POWERED)</span>
+        </div>
+
+        <div class="form-group droide-card" id="droideCard" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px;">
+              <span>🚀 Lingkungan Kerja (Dual-Workstation)</span>
+            </div>
+            <span class="badge" id="workstationStatusBadge" style="background: #00a884; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 12px;">Alpine Aktif</span>
+          </div>
+          <p style="font-size: 12px; color: var(--wa-text-secondary); line-height: 1.4; margin-bottom: 10px;">
+            Didukung arsitektur <strong>Droide IDE</strong> oleh Bay Studio. Hot-swap antara Alpine Linux (~15MB RAM super cepat) dan Ubuntu (glibc lengkap untuk kompilasi toolchain).
+          </p>
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button type="button" class="btn btn-secondary" id="btnSwitchAlpine" style="flex: 1; font-size: 12px; padding: 6px;">
+              🏔️ Alpine (Ringan)
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnSwitchUbuntu" style="flex: 1; font-size: 12px; padding: 6px;">
+              🐧 Ubuntu (Lengkap)
+            </button>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
+            <div>
+              <div style="font-size: 12px; font-weight: 600;">💻 Terminal Virtual Console</div>
+              <div style="font-size: 11px; color: var(--wa-text-secondary);">Akses shell PRoot langsung & feedback loop otomatis</div>
+            </div>
+            <button type="button" class="btn btn-primary" id="btnOpenTerminalOverlay" style="font-size: 12px; padding: 6px 12px;">
+              Buka Terminal
+            </button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; margin-top: 8px;">
+            <div>
+              <div style="font-size: 12px; font-weight: 600;">🔌 Droide KADB (Wireless ADB)</div>
+              <div style="font-size: 11px; color: var(--wa-text-secondary);" id="kadbStatusText">Android 11+ Shell Akses Penuh</div>
+            </div>
+            <button type="button" class="btn btn-secondary" id="btnCheckKadb" style="font-size: 12px; padding: 6px 12px;">
+              Cek Status
+            </button>
+          </div>
+        </div>
+
       </div>
       <div class="modal-box-footer">
         <button class="btn btn-secondary" id="btnClearChatHistory" style="margin-right: auto;">Bersihkan Chat Ini</button>
