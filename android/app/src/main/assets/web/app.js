@@ -2425,6 +2425,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("snippetModal").style.display = "flex";
   });
 
+  document.getElementById("attachBtnTerminal")?.addEventListener("click", () => {
+    document.getElementById("attachPopupMenu").style.display = "none";
+    openTerminalModal();
+  });
+
   // Snippet Modal buttons & inputs
   document.getElementById("btnCloseSnippetModal").addEventListener("click", () => {
     document.getElementById("snippetModal").style.display = "none";
@@ -2889,8 +2894,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Dedicated Terminal Buttons (Header, Nav Rail, Dropdown Menu)
-  document.getElementById("btnHeaderTerminal")?.addEventListener("click", openTerminalModal);
+  // Dedicated Terminal Triggers (Nav Rail, Attachment Menu, Dropdown Menu)
   document.getElementById("tabTerminal")?.addEventListener("click", openTerminalModal);
   document.getElementById("menuItemTerminal")?.addEventListener("click", () => {
     const dropdown = document.getElementById("chatMenuDropdown");

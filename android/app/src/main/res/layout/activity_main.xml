@@ -50,7 +50,7 @@
             android:gravity="center" />
     </LinearLayout>
 
-    <!-- Floating Action Button for Terminal Console -->
+    <!-- Floating Action Button for Terminal Console (Hidden by default, triggered via Droide UI) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabTerminal"
         android:layout_width="wrap_content"
@@ -59,6 +59,7 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/terminal_title"
         android:src="@drawable/ic_launcher_foreground"
+        android:visibility="gone"
         app:backgroundTint="@color/wa_bg_panel"
         app:tint="@color/wa_teal"
         app:elevation="8dp"

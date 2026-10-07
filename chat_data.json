@@ -2622,6 +2622,13 @@
         "duration": null,
         "time": "04:42",
         "ticks": false
+      },
+      {
+        "id": "sys-1791409887009-r50m",
+        "chatId": "group",
+        "type": "system",
+        "text": "🧠 [Memori Dipadatkan]: Konteks obrolan (159 pesan) telah diringkas secara otomatis oleh sistem. Budi & Rian kini merespons lebih cepat, hemat memori, dan fokus pada topik aktif.",
+        "time": "04:51"
       }
     ],
     "direct_budi": [
@@ -5442,7 +5449,7 @@
       "bgGradient": "linear-gradient(135deg, #075e54 0%, #128c7e 100%)",
       "timestamp": 1791370038457,
       "expiresAt": 1791456438457,
-      "timeFormatted": "10 jam lalu"
+      "timeFormatted": "11 jam lalu"
     },
     {
       "id": "st-rian-1791369996308",
@@ -5456,7 +5463,7 @@
       "bgGradient": "linear-gradient(135deg, #d35400 0%, #e67e22 100%)",
       "timestamp": 1791369936308,
       "expiresAt": 1791456336308,
-      "timeFormatted": "10 jam lalu"
+      "timeFormatted": "11 jam lalu"
     }
   ],
   "calls": [
@@ -5630,7 +5637,7 @@
     }
   ],
   "contextMemory": {
-    "group": "[Ringkasan Grup Tim Proyek - 151 pesan dipadatkan pada 00:03]\n- Topik Utama: bebas\n- Inti Arahan & Pembahasan Sebelumnya:\n- Arahan Boss Bayu: \"hai\"\n- Budi: \"Halo juga Boss Bayu! 🙏 Selamat hadir di grup Pak Ketua. Kami standby penuh di sini siap terima arah\"\n- Rian: \"Hai juga Boss Bayu! 🙏 Selamat hadir di grup Pak Ketua. Kami berdua standby solid nih, tinggal nungg\"\n- Budi: \"Setuju Mas @Rian, solid kompak standby kawal arahan sampai tuntas. 🙏 Siap Boss Bayu, kami berdua st\"\n- Rian: \"Hai juga Boss Bayu! 🙏 Selamat malam Pak Ketua, Rian standby solid nih bareng Mas Budi di grup. Ting\"\n- Arahan Boss Bayu: \"malam karyawanku\"\n- Budi: \"Malam juga Boss Bayu 🙏 Sehat selalu Pak Ketua, kami berdua standby penuh di grup kawal monitoring m\"\n- Arahan Boss Bayu: \"kirim pap kalian, pastikan masih sehat\"\n- Status: Memori lama telah dirangkum padat. Obrolan berlanjut pada topik aktif.",
+    "group": "[Ringkasan Grup Tim Proyek - 159 pesan dipadatkan pada 04:51]\n- Topik Utama: bebas\n- Inti Arahan & Pembahasan Sebelumnya:\n- Arahan Boss Bayu: \"malam karyawanku\"\n- Budi: \"Malam juga Boss Bayu 🙏 Sehat selalu Pak Ketua, kami berdua standby penuh di grup kawal monitoring m\"\n- Arahan Boss Bayu: \"kirim pap kalian, pastikan masih sehat\"\n- Rian: \"Pap workstation Rian malam ini Boss Bayu - layar aman standby monitoring\"\n- Arahan Boss Bayu: \"jalanin comand ls -ia di terminal, trus screenshot kirim ke saya gambar asli hasil screenshot\"\n- Arahan Boss Bayu: \"kirimkan\"\n- Rian: \"Hasil screenshot ls -ia asli dari terminal Rian, Boss Bayu\"\n- Arahan Boss Bayu: \"hao\"\n- Status: Memori lama telah dirangkum padat. Obrolan berlanjut pada topik aktif.",
     "direct_budi": "[Ringkasan Japri Budi - 87 pesan dipadatkan pada 21:39]\n- Topik Utama: bebas\n- Inti Arahan & Pembahasan Sebelumnya:\n- Budi: \"Selamat makan dulu Boss Bayu, dinikmati santai biar fit lagi Pak Boss. Saya standby monitor dulu, na\"\n- Arahan Boss Bayu: \"bud, si rian chat kamu?\"\n- Budi: \"Belum ada chat masuk dari Rian ke saya sejauh ini, Boss Bayu. Perlu saya hubungi dia sekarang untuk \"\n- Arahan Boss Bayu: \"chat lewat grup aja\"\n- Arahan Boss Bayu: \"panggil si rian lewat grup\"\n- Arahan Boss Bayu: \"mana kok ga ada di grup?\"\n- Budi: \"Mohon maaf bikin menunggu, Boss Bayu. Saya langsung panggil Rian di grup sekarang juga, Pak Ketua. \ud83d\"\n- Arahan Boss Bayu: \"saya laper bud, belikan batagor\"\n- Status: Memori lama telah dirangkum padat. Obrolan berlanjut pada topik aktif.",
     "direct_rian": ""
   }
