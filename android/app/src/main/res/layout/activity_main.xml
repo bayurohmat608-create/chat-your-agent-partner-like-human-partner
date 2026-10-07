@@ -58,6 +58,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/terminal_title"
+        android:src="@drawable/ic_launcher_foreground"
         app:backgroundTint="@color/wa_bg_panel"
         app:tint="@color/wa_teal"
         app:elevation="8dp"

@@ -44,6 +44,14 @@
           <span class="nav-badge" id="badgeCalls" style="display:none;">0</span>
           <span class="nav-label">Panggilan</span>
         </button>
+
+        <!-- Terminal IDE Tab (Droide Engine) -->
+        <button class="nav-btn" id="tabTerminal" title="Terminal IDE (Droide)" data-tab="terminal">
+          <svg class="nav-svg" viewBox="0 0 24 24" width="22" height="22">
+            <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zm-9.71-3.71L6.59 14 5.17 12.59 8.88 8.88l1.41 1.41-2.29 2.3 2.29 2.3-1.41 1.4zM13 15h6v2h-6z"/>
+          </svg>
+          <span class="nav-label">Terminal</span>
+        </button>
       </div>
 
       <div class="nav-bottom">
@@ -552,6 +560,13 @@
             </svg>
           </button>
 
+          <!-- Terminal IDE Console Button (Droide Engine) -->
+          <button class="btn-header-action" id="btnHeaderTerminal" title="Buka Terminal IDE Console" style="color: var(--wa-teal);">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zm-9.71-3.71L6.59 14 5.17 12.59 8.88 8.88l1.41 1.41-2.29 2.3 2.29 2.3-1.41 1.4zM13 15h6v2h-6z"/>
+            </svg>
+          </button>
+
           <!-- In-Chat Search Button -->
           <button class="btn-header-action" id="btnToggleChatSearch" title="Cari Pesan">
             <svg viewBox="0 0 24 24" width="20" height="20">
@@ -594,6 +609,10 @@
         <button class="menu-item" id="menuItemSearch">
           <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
           <span>Cari Pesan</span>
+        </button>
+        <button class="menu-item" id="menuItemTerminal">
+          <svg viewBox="0 0 24 24" width="18" height="18" style="color: var(--wa-teal);"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zm-9.71-3.71L6.59 14 5.17 12.59 8.88 8.88l1.41 1.41-2.29 2.3 2.29 2.3-1.41 1.4zM13 15h6v2h-6z"/></svg>
+          <span>Terminal IDE Console</span>
         </button>
         <button class="menu-item" id="btnLoopToggle">
           <svg id="iconLoopState" viewBox="0 0 24 24" width="18" height="18">
@@ -1490,6 +1509,56 @@
       </div>
       <div class="modal-box-footer">
         <button class="btn btn-secondary" id="btnCancelAddProfile">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. TERMINAL IDE CONSOLE MODAL (DROIDE POWERED) -->
+  <div class="modal-overlay" id="terminalModal" style="display: none; z-index: 9999;">
+    <div class="modal-box" style="max-width: 760px; width: 95%; height: 85vh; display: flex; flex-direction: column; background: #0d1117; border: 1px solid #30363d; border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.7); overflow: hidden;">
+      <div class="modal-box-header" style="background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" width="20" height="20" style="color: #00a884;">
+            <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zm-9.71-3.71L6.59 14 5.17 12.59 8.88 8.88l1.41 1.41-2.29 2.3 2.29 2.3-1.41 1.4zM13 15h6v2h-6z"/>
+          </svg>
+          <h2 style="font-size: 15px; font-weight: 600; margin: 0; color: #e6edf3;" id="terminalModalTitle">Terminal IDE Console (Droide Engine)</h2>
+          <span class="badge" id="terminalModalBadge" style="background: #005c4b; color: #25d366; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: bold;">ALPINE</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnTerminalToggleWs" style="font-size: 11px; padding: 4px 10px;">Ganti Workstation</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnTerminalClearOutput" style="font-size: 11px; padding: 4px 10px;">Clear</button>
+          <button class="btn-close-modal" id="btnCloseTerminalModal" title="Tutup Terminal (Esc)">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Quick Shortcut Chips Bar -->
+      <div style="background: #161b22; padding: 8px 14px; display: flex; gap: 8px; overflow-x: auto; border-bottom: 1px solid #21262d;">
+        <button type="button" class="btn-quick-term" data-cmd="ls -la">📁 ls -la</button>
+        <button type="button" class="btn-quick-term" data-cmd="git status">🌿 git status</button>
+        <button type="button" class="btn-quick-term" data-cmd="pwd">📍 pwd</button>
+        <button type="button" class="btn-quick-term" data-cmd="uname -a">🐧 uname -a</button>
+        <button type="button" class="btn-quick-term" data-cmd="df -h">💾 df -h</button>
+        <button type="button" class="btn-quick-term" data-cmd="node -v">⚡ node -v</button>
+        <button type="button" class="btn-quick-term" data-cmd="top -n 1 -b">📊 top</button>
+      </div>
+
+      <!-- Terminal Output Screen -->
+      <div id="terminalScreen" style="flex: 1; padding: 14px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 13px; color: #3fb950; background: #0d1117; overflow-y: auto; white-space: pre-wrap; word-break: break-all; line-height: 1.55;">
+=== WhatsApp AI Team · Mobile IDE Terminal (Droide Architecture) ===
+Workstation: Alpine Linux (~15MB RAM super cepat) &amp; Ubuntu glibc
+Direktori: /opt/workspaces/budi (Shared dengan Rian)
+Feedback Loop: Otomatis mendeteksi compiler error &amp; mengirim laporan ke AI.
+
+Ketik perintah di bawah atau klik shortcut di atas untuk memulai...
+</div>
+
+      <!-- Terminal Input Form -->
+      <div style="background: #161b22; border-top: 1px solid #30363d; padding: 10px 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="color: #00a884; font-family: monospace; font-weight: bold; font-size: 14px;">$ </span>
+        <input type="text" id="inputTerminalCmd" placeholder="Ketik perintah shell (cth: ls -la, git log -n 3, cat package.json)..." autocomplete="off" style="flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; outline: none; color: #e6edf3; font-family: monospace; font-size: 13px;">
+        <button type="button" class="btn btn-primary btn-sm" id="btnTerminalSubmit" style="padding: 8px 16px; font-size: 12px; font-weight: bold;">Jalankan</button>
       </div>
     </div>
   </div>

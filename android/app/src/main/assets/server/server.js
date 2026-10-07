@@ -2617,6 +2617,55 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Interactive Terminal Command Execution Endpoint (Droide IDE Engine)
+  if (url.pathname === "/api/terminal/exec" && req.method === "POST") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        const parsed = JSON.parse(body || "{}");
+        const command = (parsed.command || "").trim();
+        if (!command) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify({ error: "Perintah tidak boleh kosong" }));
+        }
+
+        const cwd = BUDI_WORKSPACE && fs.existsSync(BUDI_WORKSPACE) ? BUDI_WORKSPACE : __dirname;
+        const { exec } = require("child_process");
+        exec(command, { cwd, timeout: 20000, maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+          const exitCode = err ? (err.code || 1) : 0;
+          res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+          res.end(JSON.stringify({
+            exitCode,
+            stdout: stdout || "",
+            stderr: stderr || (err ? err.message : ""),
+            workstation: activeWorkstation,
+            cwd
+          }));
+
+          // If command failed and reportError is set, broadcast feedback to AI team
+          if (exitCode !== 0 && parsed.reportError) {
+            const feedbackMsg = {
+              id: `sys-term-${Date.now()}`,
+              chatId: state.activeChat || "group",
+              type: "system",
+              text: `⚠️ **Terminal Feedback Loop (Droide Engine)**:\nPerintah: \`${command}\` gagal (Exit: ${exitCode})\nDetail:\n\`\`\`\n${(stderr || err.message).slice(0, 300)}\n\`\`\``,
+              time: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
+            };
+            if (!state.chats[feedbackMsg.chatId]) state.chats[feedbackMsg.chatId] = [];
+            state.chats[feedbackMsg.chatId].push(feedbackMsg);
+            saveChatData();
+            broadcastSSE("message", feedbackMsg);
+          }
+        });
+      } catch (e) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+    return;
+  }
+
   // Terminal Feedback Loop Endpoint (Adopted from Droide Architecture)
   if (url.pathname === "/api/agent/feedback" && req.method === "POST") {
     let body = "";

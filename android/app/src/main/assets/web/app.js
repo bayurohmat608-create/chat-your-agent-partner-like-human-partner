@@ -2270,6 +2270,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".nav-btn[data-tab]").forEach(btn => {
     btn.addEventListener("click", () => {
       const tab = btn.dataset.tab;
+      if (tab === "terminal") {
+        openTerminalModal();
+        return;
+      }
       appState.activeTab = tab;
 
       document.querySelectorAll(".nav-btn[data-tab]").forEach(b => b.classList.remove("active"));
@@ -2885,6 +2889,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Dedicated Terminal Buttons (Header, Nav Rail, Dropdown Menu)
+  document.getElementById("btnHeaderTerminal")?.addEventListener("click", openTerminalModal);
+  document.getElementById("tabTerminal")?.addEventListener("click", openTerminalModal);
+  document.getElementById("menuItemTerminal")?.addEventListener("click", () => {
+    const dropdown = document.getElementById("chatMenuDropdown");
+    if (dropdown) dropdown.style.display = "none";
+    openTerminalModal();
+  });
+  document.getElementById("btnCloseTerminalModal")?.addEventListener("click", closeTerminalModal);
+  document.getElementById("terminalModal")?.addEventListener("click", (e) => {
+    if (e.target === document.getElementById("terminalModal")) closeTerminalModal();
+  });
+  document.getElementById("btnTerminalClearOutput")?.addEventListener("click", () => {
+    const screen = document.getElementById("terminalScreen");
+    if (screen) screen.textContent = "=== Terminal Workstation Cleared ===\n$ ";
+  });
+  document.getElementById("btnTerminalToggleWs")?.addEventListener("click", async () => {
+    try {
+      const res = await fetch("/api/workstation/status");
+      const data = await res.json();
+      const next = data.active === "ubuntu" ? "alpine" : "ubuntu";
+      await switchWorkstation(next);
+      updateTerminalWorkstationHeader();
+    } catch (_) {}
+  });
+  document.querySelectorAll(".btn-quick-term").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const cmd = btn.dataset.cmd;
+      if (cmd) executeTerminalCommand(cmd);
+    });
+  });
+  document.getElementById("btnTerminalSubmit")?.addEventListener("click", () => {
+    const input = document.getElementById("inputTerminalCmd");
+    if (input) executeTerminalCommand(input.value);
+  });
+  document.getElementById("inputTerminalCmd")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      executeTerminalCommand(e.target.value);
+    }
+  });
+
   // Context Menu Item Actions
   document.getElementById("ctxReply")?.addEventListener("click", () => {
     if (activeContextMsg) {
@@ -3129,6 +3175,83 @@ async function switchWorkstation(target) {
     }
   } catch (err) {
     showToast("Error beralih workstation: " + err.message);
+  }
+}
+
+function openTerminalModal() {
+  if (window.AndroidBridge && window.AndroidBridge.toggleTerminal) {
+    window.AndroidBridge.toggleTerminal("alpine");
+  }
+  const modal = document.getElementById("terminalModal");
+  if (modal) {
+    modal.style.display = "flex";
+    updateTerminalWorkstationHeader();
+    setTimeout(() => {
+      const input = document.getElementById("inputTerminalCmd");
+      if (input) input.focus();
+    }, 100);
+  }
+}
+
+function closeTerminalModal() {
+  const modal = document.getElementById("terminalModal");
+  if (modal) modal.style.display = "none";
+}
+
+async function updateTerminalWorkstationHeader() {
+  try {
+    const res = await fetch("/api/workstation/status");
+    if (!res.ok) return;
+    const data = await res.json();
+    const active = (data.active || "alpine").toUpperCase();
+    const badge = document.getElementById("terminalModalBadge");
+    const title = document.getElementById("terminalModalTitle");
+    if (badge) {
+      badge.textContent = active;
+      badge.style.background = active === "UBUNTU" ? "#ea580c" : "#005c4b";
+      badge.style.color = active === "UBUNTU" ? "#ffffff" : "#25d366";
+    }
+    if (title) {
+      title.textContent = `Terminal IDE Console (${active})`;
+    }
+  } catch (_) {}
+}
+
+async function executeTerminalCommand(cmd) {
+  cmd = (cmd || "").trim();
+  if (!cmd) return;
+
+  const screen = document.getElementById("terminalScreen");
+  const input = document.getElementById("inputTerminalCmd");
+  if (input) input.value = "";
+
+  if (screen) {
+    screen.textContent += `\n$ ${cmd}\n`;
+    screen.scrollTop = screen.scrollHeight;
+  }
+
+  try {
+    const res = await fetch("/api/terminal/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command: cmd, reportError: true })
+    });
+    const data = await res.json();
+    if (screen) {
+      if (data.stdout) screen.textContent += data.stdout;
+      if (data.stderr) {
+        screen.textContent += `\n[STDERR / ERROR]\n${data.stderr}\n`;
+      }
+      if (data.exitCode !== 0) {
+        screen.textContent += `[Exit Code: ${data.exitCode}]\n`;
+      }
+      screen.scrollTop = screen.scrollHeight;
+    }
+  } catch (err) {
+    if (screen) {
+      screen.textContent += `\n[Gagal koneksi server: ${err.message}]\n`;
+      screen.scrollTop = screen.scrollHeight;
+    }
   }
 }
 

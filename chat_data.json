@@ -2566,6 +2566,62 @@
         "type": "system",
         "text": "⚠️ **Terminal Feedback Loop (Droide Engine)**:\nPerintah: `make test` gagal (Exit: 1)\nDetail:\n```\nAssertionError: expected true to be false\n```",
         "time": "04:21 AM"
+      },
+      {
+        "id": "msg-1791409301393-oygc",
+        "chatId": "group",
+        "type": "chat",
+        "sender": "user",
+        "senderName": "Bayu",
+        "text": "hao",
+        "side": "right",
+        "model": null,
+        "quoted": null,
+        "duration": null,
+        "time": "04:41",
+        "ticks": true
+      },
+      {
+        "id": "msg-1791409309607-6nnz",
+        "chatId": "group",
+        "type": "chat",
+        "sender": "user",
+        "senderName": "Bayu",
+        "text": "selamat pagi",
+        "side": "right",
+        "model": null,
+        "quoted": null,
+        "duration": null,
+        "time": "04:41",
+        "ticks": true
+      },
+      {
+        "id": "msg-1791409318526-2rdo",
+        "chatId": "group",
+        "type": "chat",
+        "sender": "ai1",
+        "senderName": "Budi",
+        "text": "Siap, Boss Bayu 🙏 Screenshot dari Mas @Rian sudah masuk jelas Pak Ketua, mantap solid. Saya standby penuh di sini, kalau perlu versi saya langsung saya susulkan juga.",
+        "side": "left",
+        "model": "opencode/muse-spark-1.3-contributor-free",
+        "quoted": null,
+        "duration": null,
+        "time": "04:41",
+        "ticks": false
+      },
+      {
+        "id": "msg-1791409327658-5n4f",
+        "chatId": "group",
+        "type": "chat",
+        "sender": "ai2",
+        "senderName": "Rian",
+        "text": "Selamat pagi juga Boss Bayu! 🙏 Sehat selalu Pak Ketua, Rian standby solid nih depan workstation pagi ini. Siap gaspol kawal arahan hari ini sampai tuntas!",
+        "side": "left",
+        "model": "opencode/muse-spark-1.3-contributor-free",
+        "quoted": null,
+        "duration": null,
+        "time": "04:42",
+        "ticks": false
       }
     ],
     "direct_budi": [
@@ -5372,7 +5428,7 @@
       "bgGradient": "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
       "timestamp": 1791370512754,
       "expiresAt": 1791456912754,
-      "timeFormatted": "7 jam lalu"
+      "timeFormatted": "10 jam lalu"
     },
     {
       "id": "st-user-1791370038457",
@@ -5386,7 +5442,7 @@
       "bgGradient": "linear-gradient(135deg, #075e54 0%, #128c7e 100%)",
       "timestamp": 1791370038457,
       "expiresAt": 1791456438457,
-      "timeFormatted": "7 jam lalu"
+      "timeFormatted": "10 jam lalu"
     },
     {
       "id": "st-rian-1791369996308",
@@ -5400,10 +5456,20 @@
       "bgGradient": "linear-gradient(135deg, #d35400 0%, #e67e22 100%)",
       "timestamp": 1791369936308,
       "expiresAt": 1791456336308,
-      "timeFormatted": "7 jam lalu"
+      "timeFormatted": "10 jam lalu"
     }
   ],
   "calls": [
+    {
+      "id": "call-1791409357035",
+      "contactId": "budi",
+      "contactName": "Budi (Tech Lead)",
+      "type": "voice",
+      "direction": "outgoing",
+      "time": "04:42",
+      "dateFormatted": "Hari ini, 04:42",
+      "duration": "00:31"
+    },
     {
       "id": "call-1791363956058",
       "contactId": "budi",
