@@ -492,9 +492,23 @@ function connectSSE() {
 
           if (msg.side === "right") {
             playSentSound();
+            if (window.AndroidBridge && window.AndroidBridge.triggerHaptic) {
+              window.AndroidBridge.triggerHaptic("light");
+            }
             scrollToBottom(true);
           } else {
             playReceivedSound();
+            if (window.AndroidBridge) {
+              if (window.AndroidBridge.triggerHaptic) window.AndroidBridge.triggerHaptic("medium");
+              if (document.hidden && window.AndroidBridge.showDeviceNotification) {
+                window.AndroidBridge.showDeviceNotification(
+                  (msg.senderName || "AI") + " (WhatsApp AI)",
+                  msg.text || "Mengirim lampiran/update tugas",
+                  msg.senderName || "AI",
+                  targetChatId
+                );
+              }
+            }
             if (appState.userHasScrolledUp) {
               appState.unreadWhileScrolled++;
               const badge = document.getElementById("scrollUnreadBadge");
@@ -507,6 +521,14 @@ function connectSSE() {
         } else {
           appState.unreads[targetChatId] = (appState.unreads[targetChatId] || 0) + 1;
           playReceivedSound();
+          if (window.AndroidBridge && window.AndroidBridge.showDeviceNotification) {
+            window.AndroidBridge.showDeviceNotification(
+              (msg.senderName || "AI") + " (WhatsApp AI)",
+              msg.text || "Mengirim pesan baru",
+              msg.senderName || "AI",
+              targetChatId
+            );
+          }
         }
 
         renderAllChatPreviews();

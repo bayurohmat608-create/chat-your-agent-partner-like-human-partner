@@ -56,6 +56,11 @@
                 android:value="Persistent local AI engines and Node.js server runtime" />
         </service>
 
+        <!-- Quick Reply Notification Receiver -->
+        <receiver
+            android:name=".service.QuickReplyReceiver"
+            android:exported="false" />
+
     </application>
 
 </manifest>

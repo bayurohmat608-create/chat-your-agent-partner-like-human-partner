@@ -25,6 +25,16 @@ try {
   console.error("Directory init error:", e);
 }
 
+// ===== WORKSTATION ENGINE STATE (Alpine / Ubuntu) =====
+const WORKSTATION_STATE_FILE = path.join(__dirname, ".workstation_state.json");
+let activeWorkstation = "alpine";
+if (fs.existsSync(WORKSTATION_STATE_FILE)) {
+  try {
+    const ws = JSON.parse(fs.readFileSync(WORKSTATION_STATE_FILE, "utf-8"));
+    if (ws.active) activeWorkstation = ws.active;
+  } catch {}
+}
+
 // ===== MULTI-PROFILE AUTH VAULT (Antigravity & Codex) =====
 const AUTH_VAULT_DIR = path.join(__dirname, "auth_vault");
 const AUTH_VAULT_FILE = path.join(AUTH_VAULT_DIR, "vault.json");
@@ -2563,6 +2573,47 @@ const server = http.createServer((req, res) => {
     } catch {}
     res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
     res.end(JSON.stringify(files));
+    return;
+  }
+
+  // Workstation Status & Hot-Swap Endpoints
+  if (url.pathname === "/api/workstation/status" && req.method === "GET") {
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({
+      active: activeWorkstation,
+      available: ["alpine", "ubuntu"],
+      storage: {
+        alpine: "/workstations/alpine",
+        ubuntu: "/workstations/ubuntu",
+        workspaces: {
+          budi: BUDI_WORKSPACE,
+          rian: RIAN_WORKSPACE
+        }
+      }
+    }));
+    return;
+  }
+
+  if (url.pathname === "/api/workstation/switch" && req.method === "POST") {
+    let body = "";
+    req.on("data", (chunk) => (body += chunk));
+    req.on("end", () => {
+      try {
+        const parsed = JSON.parse(body || "{}");
+        if (!parsed.target) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify({ error: "Parameter target ('alpine' atau 'ubuntu') diperlukan" }));
+        }
+        activeWorkstation = parsed.target.toLowerCase() === "ubuntu" ? "ubuntu" : "alpine";
+        fs.writeFileSync(WORKSTATION_STATE_FILE, JSON.stringify({ active: activeWorkstation }), "utf-8");
+        broadcastSSE("workstation", { active: activeWorkstation });
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, active: activeWorkstation }));
+      } catch (err) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
     return;
   }
 

@@ -153,12 +153,18 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         }
+        // Inisialisasi NativeBridge dua arah
+        webView.addJavascriptInterface(com.bossbayu.aiteam.bridge.NativeBridge(this, this), "AndroidBridge")
+    }
+
+    fun showTerminalOverlay(sessionType: String = "alpine") {
+        val dialog = TerminalOverlayDialog(this, workstationManager, prootManager)
+        dialog.show()
     }
 
     private fun setupTerminalFab() {
         fabTerminal.setOnClickListener {
-            val dialog = TerminalOverlayDialog(this, workstationManager, prootManager)
-            dialog.show()
+            showTerminalOverlay("alpine")
         }
     }
 

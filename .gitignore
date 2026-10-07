@@ -23,6 +23,7 @@ auth_vault/
 .local/
 *.pid
 .wakelock*
+.workstation_state.json
 .cooldown.*
 .guard.*
 .restart.*
