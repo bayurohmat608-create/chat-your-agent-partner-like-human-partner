@@ -50,7 +50,7 @@ Lalu buka browser Anda di: **`http://localhost:3000`**
    - **Login Asli Google OAuth 2.0**: Menggunakan kuota langganan Gemini Pro / Ultra bawaan akun Google Anda.
    - **Login Asli OpenAI Device Auth**: Menggunakan kuota langganan ChatGPT Plus / Pro bawaan akun OpenAI Anda.
    - **Opencode Engine**: Menjalankan model komunitas lokal dan open-source secara mandiri tanpa token berbayar.
-   - Budi dan Rian dapat menggunakan provider model berbeda secara serentak di workspace terpisah (`/opt/workspaces/budi` dan `/opt/workspaces/rian`) tanpa bentrok.
+   - Budi dan Rian dapat menggunakan provider model berbeda secara serentak di workspace terpisah (`.runtime/workspaces/budi` dan `.runtime/workspaces/rian`) tanpa bentrok.
 
 3. **Workstation Mandiri & Android Blueprint**:
    - Dilengkapi cetak biru arsitektur mandiri Android (Kotlin + PRoot Dual Workstation).
@@ -92,4 +92,4 @@ Semua komponen pihak ketiga (*third-party*) yang digunakan atau diintegrasikan b
 | **Android Jetpack & AndroidX** | **Apache-2.0** | Android Open Source Project | Fondasi UI & Service aplikasi Android Native |
 | **Google Antigravity CLI** (`agy`) | **Developer Preview** | Google | Engine AI orchestration untuk Budi |
 
-Dokumentasi atribusi resmi lengkap dapat dilihat pada file **[NOTICE](NOTICE)**.
+Dokumentasi atribusi resmi lengkap dapat dilihat pada file **[NOTICE](NOTICE)**.\n\n### 3. Diagnostik & Smoke Test\n\n    npm run doctor\n    npm test\n\nInstaller sekarang memvalidasi binary engine sesuai OS/arsitektur host. Instalasi gagal dengan jelas bila engine wajib tidak executable.\n
