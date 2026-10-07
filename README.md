@@ -78,6 +78,18 @@ Lalu buka browser Anda di: **`http://localhost:3000`**
 
 ---
 
-## 📄 Lisensi
+## 📄 Lisensi & Komponen Pihak Ketiga (Third-Party Notices)
 
 Proyek ini dilisensikan di bawah **[Apache License 2.0](LICENSE)**. Anda bebas menggunakan, memodifikasi, dan mendistribusikan perangkat lunak ini sesuai dengan ketentuan lisensi Apache 2.0.
+
+Semua komponen pihak ketiga (*third-party*) yang digunakan atau diintegrasikan bersifat lisensi permisif (*permissive open-source*) yang kompatibel 100% dengan Apache 2.0:
+
+| Komponen | Lisensi | Pemilik / Pengembang | Deskripsi |
+| :--- | :--- | :--- | :--- |
+| **OpenAI Codex CLI** (`@openai/codex`) | **Apache-2.0** | OpenAI | Driver eksekusi AI coding untuk Rian |
+| **OpenCode CLI** (`opencode`) | **MIT** | Tim OpenCode | Engine AI lokal / model komunitas gratis |
+| **Highlight.js** | **BSD-3-Clause** | Ivan Sagalaev & Kontributor | Syntax highlighting pada Web UI WhatsApp |
+| **Android Jetpack & AndroidX** | **Apache-2.0** | Android Open Source Project | Fondasi UI & Service aplikasi Android Native |
+| **Google Antigravity CLI** (`agy`) | **Developer Preview** | Google | Engine AI orchestration untuk Budi |
+
+Dokumentasi atribusi resmi lengkap dapat dilihat pada file **[NOTICE](NOTICE)**.
