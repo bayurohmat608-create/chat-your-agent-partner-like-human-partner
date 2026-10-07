@@ -55,6 +55,18 @@ class PRootManager(private val context: Context) {
             cmd.add("-b")
             cmd.add("/sys")
 
+            // Mount Public Shared Storage (/sdcard/Download/AITeam)
+            val publicAITeam = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS)?.let {
+                File(it, "AITeam")
+            }
+            if (publicAITeam != null) {
+                if (!publicAITeam.exists()) publicAITeam.mkdirs()
+                if (publicAITeam.exists()) {
+                    cmd.add("-b")
+                    cmd.add("${publicAITeam.absolutePath}:/sdcard/AITeam")
+                }
+            }
+
             // Mount extra directories if provided
             for ((hostDir, containerPath) in extraBinds) {
                 if (hostDir.exists()) {

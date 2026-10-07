@@ -66,6 +66,25 @@ class TerminalOverlayDialog(
             }
         }
 
+        val toolbar = findViewById<TerminalToolbar>(R.id.terminalToolbar)
+        toolbar?.setKeyPressListener(object : TerminalToolbar.KeyPressListener {
+            override fun onSpecialKeyPressed(keyName: String, sequence: ByteArray) {
+                when (keyName) {
+                    "ESC" -> terminalSession?.sendCommand(String(sequence))
+                    "TAB" -> etCommand.append("  ")
+                    "|" -> etCommand.append(" | ")
+                    "/" -> etCommand.append("/")
+                    "-" -> etCommand.append("-")
+                    "~" -> etCommand.append("~")
+                    else -> {
+                        if (sequence.isNotEmpty()) {
+                            terminalSession?.sendCommand(String(sequence))
+                        }
+                    }
+                }
+            }
+        })
+
         startTerminal()
     }
 

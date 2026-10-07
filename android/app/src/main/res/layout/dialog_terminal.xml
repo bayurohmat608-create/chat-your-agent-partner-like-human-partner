@@ -64,6 +64,12 @@
             android:textIsSelectable="true" />
     </ScrollView>
 
+    <!-- Virtual Accessory Toolbar (ESC, CTRL, ALT, TAB, Nav Arrows) -->
+    <com.bossbayu.aiteam.terminal.TerminalToolbar
+        android:id="@+id/terminalToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <!-- Terminal Command Input Bar -->
     <LinearLayout
         android:layout_width="match_parent"
