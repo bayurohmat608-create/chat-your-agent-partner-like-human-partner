@@ -14,7 +14,7 @@ Aplikasi kolaborasi tim AI mandiri dengan antarmuka **WhatsApp Web v3.2** dan **
 
 ## ⚡ Instalasi Cepat (Terminal & Web)
 
-Cukup satu perintah di terminal Linux / Android Termux / macOS:
+Ga ribet brooo, Kalo mau full WhatsApp ui, aktifin di localhost aja, biar bisa sleepcall an sama budi & rian. Cukup satu perintah di terminal Linux / Android Termux / macOS:
 
 ```bash
 git clone https://github.com/bayurohmat608-create/chat-your-agent-partner-like-human-partner.git whatsapp-ai-team
