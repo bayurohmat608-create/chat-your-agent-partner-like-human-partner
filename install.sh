@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# WhatsApp AI Team (Budi & Rian) — Automated Instant Installer
+# Halo bujankk, WhatsApp AI Team (Budi & Rian) — Automated Instant Installer
 # License: Apache 2.0
 # ==============================================================================
 set -e
@@ -82,7 +82,7 @@ fi
 echo -e "\n\033[1;32m================================================================="
 echo -e "✅ INSTALASI SELESAI & SELURUH ENGINE SIAP PAKAI!"
 echo -e "=================================================================\033[0m"
-echo -e "Jalankan langsung di terminal Anda:"
+echo -e "Jalankan langsung di terminal kau ya bujank:"
 echo -e "  1. \033[1;36mMode Terminal TUI (Chat WhatsApp di Layar Konsol):\033[0m"
 echo -e "     \033[1;33m./start.sh --terminal\033[0m  atau  \033[1;33mnode cli.js\033[0m"
 echo -e ""
